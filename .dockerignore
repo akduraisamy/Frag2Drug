@@ -1,0 +1,29 @@
+# Large data files
+data/MassBank_NIST.msp
+data/*.npy
+
+# Trained models (mount at runtime with -v)
+results/model_training/models/
+
+# Numpy arrays
+results/data_processing/*.npy
+results/data_processing/meta.csv
+results/data_processing/meta_clean.csv
+
+# Git
+.git/
+.gitignore
+
+# Dev logs
+out_train.txt
+out_retrival.txt
+
+# Editor
+.claude/
+.idea/
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo

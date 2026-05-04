@@ -170,6 +170,24 @@ Open [http://localhost:8501](http://localhost:8501). Upload `data/example_query.
 
 ---
 
+## Docker
+
+Build and run the app in a self-contained container (no conda/pip setup required):
+
+```bash
+# Build
+docker build -t frag2drug .
+
+# Run — mount your trained models at runtime
+docker run -p 8501:8501 \
+  -v /path/to/results:/app/results \
+  frag2drug
+```
+
+Replace `/path/to/results` with the absolute path to your local `results/` folder containing the trained models. Then open [http://localhost:8501](http://localhost:8501).
+
+---
+
 ## Dependencies
 
 | Package | Purpose |
