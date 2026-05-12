@@ -12,7 +12,9 @@ Contributions and suggestions are welcome via GitHub Issues.
 - [x] **Drug-likeness gating** — Lipinski-inspired filters (QED, logP, MW) applied at retrieval time
 - [x] **Precursor m/z as a learned feature** — anchors MW prediction, achieving RF R²=0.95
 - [x] **Target normalisation for NN** — prevents MW scale from dominating the joint loss
-- [x] **SHAP feature importance** — per-query explanation of which m/z bins drove each prediction (Random Forest)
+- [x] **SHAP feature importance (RF)** — per-query explanation of which m/z bins drove each prediction; interactive beeswarm plots in the Streamlit app
+- [x] **SHAP feature importance (NN)** — `shap.GradientExplainer` on the Neural Network; run with `python scripts/step2_train_evaluate.py --shap`; beeswarm plots saved to `results/model_training/results/`
+- [x] **MLflow experiment tracking** — parameters, metrics (R²/MAE/RMSE), per-epoch NN loss, and SHAP plots logged per run; view with `mlflow ui`
 - [x] **Streamlit web app** — interactive spectrum upload, Run / Clear / Next navigation, CSV download
 
 ---
@@ -58,10 +60,6 @@ The current pipeline uses Random Forest and a fully-connected Neural Network. Th
 | Gaussian Process | Same scaling issue as SVR; not practical above ~5K samples |
 | Transformer | Overkill for 1007-dim vectors; requires far more data to outperform tree models |
 | Ridge / Lasso | Assume linear relationships; logP and QED have strong non-linear fragment dependencies |
-
-- [ ] **SHAP for Neural Network**
-  Currently SHAP is implemented for RF only. Extending to the NN requires `shap.GradientExplainer`
-  or `shap.DeepExplainer` — slower but gives a complementary view of which features the NN relies on.
 
 ### Visualisation
 
@@ -132,4 +130,4 @@ The current pipeline uses Random Forest and a fully-connected Neural Network. Th
 
 ---
 
-*Last updated: May 2025 — Dr. Amudha Kumari Duraisamy*
+*Last updated: May 2026 — Dr. Amudha Kumari Duraisamy*

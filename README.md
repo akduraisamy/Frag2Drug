@@ -63,6 +63,9 @@ Raw .msp file  (MassBank-NIST, 105,757 spectra)
   70 / 15 / 15 train / val / test split
   → Random Forest  (300 trees, one model per target)
   → Neural Network (512 → 256 → 128, BatchNorm + Dropout, joint prediction)
+  → MLflow tracking (params, metrics, plots logged per run)
+  → SHAP analysis  (optional --shap flag; GradientExplainer for NN)
+                   (RF SHAP available per-query in the Streamlit app)
       │
       ▼  Step 3 — Retrieval
   L2-normalised cosine similarity over 61,931 deduplicated spectra
@@ -152,11 +155,22 @@ python scripts/step1_data_pipeline.py
 # Step 2 — filter, feature engineering, train RF + NN (~15 min)
 python scripts/step2_train_evaluate.py
 
+# Step 2 with SHAP analysis — add --shap flag (~20 min)
+python scripts/step2_train_evaluate.py --shap
+
 # Step 3 — retrieval benchmark
 python scripts/step3_retrieval.py
 ```
 
 Each step caches its output — re-runs skip the expensive computation automatically.
+
+After Step 2, launch the MLflow UI to explore experiment results:
+
+```bash
+mlflow ui
+```
+
+Open [http://localhost:5000](http://localhost:5000) to compare runs, metrics (R², MAE, RMSE), per-epoch NN loss curves, and SHAP plots side by side.
 
 ---
 
@@ -196,6 +210,8 @@ Replace `/path/to/results` with the absolute path to your local `results/` folde
 | `rdkit` | SMILES → logP, QED, MW |
 | `scikit-learn` | Random Forest, StandardScaler |
 | `torch` | Neural Network |
+| `shap` | Feature importance (TreeExplainer for RF, GradientExplainer for NN) |
+| `mlflow` | Experiment tracking — params, metrics, plots per run |
 | `streamlit` | Web application |
 | `numpy / pandas` | Data handling |
 | `matplotlib / seaborn` | Visualisation |
